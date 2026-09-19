@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Legacy Old Method";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Legacy Code Simulator</h1>
+    
+    @if (ViewBag.Data != null)
+    {
+        <div class="alert alert-info mt-4">
+            <h4>Data fetched via WebClient:</h4>
+            <p>@ViewBag.Data</p>
+        </div>
+    }
+
+    @if (ViewBag.Hash != null)
+    {
+        <div class="alert alert-warning mt-4">
+            <h4>Generated MD5 Hash:</h4>
+            <code>@ViewBag.Hash</code>
+        </div>
+    }
+</div>
