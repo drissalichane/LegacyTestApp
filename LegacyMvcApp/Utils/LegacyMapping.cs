@@ -30,7 +30,7 @@ namespace LegacyMvcApp.Utils
             {
                 cfg.CreateMap<ReportDto, ReportViewModel>()
                    .ForMember(d => d.DisplayName, o => o.MapFrom(s => (s.Name ?? string.Empty).ToUpperInvariant()));
-            });
+            }, Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory.Instance);
 
             _mapper = config.CreateMapper();
         }

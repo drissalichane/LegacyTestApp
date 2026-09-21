@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Data.SqlClient;
 
 namespace LegacyWebApi.Services
 {
@@ -19,10 +18,10 @@ namespace LegacyWebApi.Services
         }
 
         [Obsolete("Thread.Abort is obsolete in .NET Core and .NET 5+.")]
-        public void ConnectToDatabase()
+        public void ConnectToDatabase(System.Threading.CancellationToken cancellationToken = default)
         {
             // Thread.Abort is considered legacy/obsolete
-            System.Threading.Thread.CurrentThread.Abort();
+            cancellationToken.ThrowIfCancellationRequested();
         }
     }
 }
