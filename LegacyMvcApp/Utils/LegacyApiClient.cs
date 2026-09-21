@@ -19,17 +19,17 @@ namespace LegacyMvcApp.Utils
 
         public string FetchReports()
         {
-            var request = new RestRequest("api/reports", Method.GET);
+            var request = new RestRequest("api/reports", Method.Get);
             request.AddHeader("Accept", "application/json");
 
-            IRestResponse response = _client.Execute(request);
+            var response = _client.Execute(request);
 
             if (!response.IsSuccessful)
             {
                 throw new InvalidOperationException($"Request failed: {response.StatusCode}");
             }
 
-            return response.Content;
+            return response.Content ?? string.Empty;
         }
     }
 }

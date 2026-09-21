@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using System.Data.SqlClient;
+
 
 namespace LegacyWebApi.Services
 {
@@ -22,7 +22,7 @@ namespace LegacyWebApi.Services
         public void ConnectToDatabase()
         {
             // Thread.Abort is considered legacy/obsolete
-            System.Threading.Thread.CurrentThread.Abort();
+            throw new OperationCanceledException("Database operation cancelled.");
         }
     }
 }
