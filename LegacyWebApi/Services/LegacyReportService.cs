@@ -22,7 +22,7 @@ namespace LegacyWebApi.Services
         {
             var rows = new List<Dictionary<string, object>>();
 
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(new Microsoft.Data.SqlClient.SqlConnectionStringBuilder(_connectionString) { Encrypt = false }.ConnectionString))
             {
                 using (var command = new SqlCommand("SELECT Id, Name FROM Reports", connection))
                 {

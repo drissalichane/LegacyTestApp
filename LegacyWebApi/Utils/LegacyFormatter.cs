@@ -1,6 +1,5 @@
 using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 
 namespace LegacyWebApi.Utils
 {
@@ -8,15 +7,10 @@ namespace LegacyWebApi.Utils
     {
         public byte[] SerializeObject(object obj)
         {
-            // BinaryFormatter is heavily deprecated and dangerous
-#pragma warning disable SYSLIB0011
-            var formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, obj);
-                return stream.ToArray();
-            }
-#pragma warning restore SYSLIB0011
+            // BinaryFormatter removed in .NET 9; use System.Text.Json UTF-8 serializer
+#pragma warning disable SYSLIB0020
+            return JsonSerializer.SerializeToUtf8Bytes(obj, obj.GetType());
+#pragma warning restore SYSLIB0020
         }
     }
 }

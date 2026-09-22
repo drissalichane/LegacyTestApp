@@ -4,9 +4,7 @@ using RestSharp;
 namespace LegacyMvcApp.Utils
 {
     /// <summary>
-    /// RestSharp 106 style client. The IRestResponse type, the
-    /// RestRequest(resource, Method) constructor and the synchronous Execute
-    /// overload were all removed in RestSharp 107+.
+    /// RestSharp usage updated for 107+ API (enum casing, RestResponse and nullable Content).
     /// </summary>
     public class LegacyApiClient
     {
@@ -19,17 +17,17 @@ namespace LegacyMvcApp.Utils
 
         public string FetchReports()
         {
-            var request = new RestRequest("api/reports", Method.GET);
+            var request = new RestRequest("api/reports", Method.Get);
             request.AddHeader("Accept", "application/json");
 
-            IRestResponse response = _client.Execute(request);
+            RestResponse response = _client.Execute(request);
 
             if (!response.IsSuccessful)
             {
                 throw new InvalidOperationException($"Request failed: {response.StatusCode}");
             }
 
-            return response.Content;
+            return response.Content ?? string.Empty;
         }
     }
 }
