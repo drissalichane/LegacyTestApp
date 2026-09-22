@@ -1,5 +1,6 @@
 using System;
 using AutoMapper;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace LegacyMvcApp.Utils
 {
@@ -17,8 +18,8 @@ namespace LegacyMvcApp.Utils
     }
 
     /// <summary>
-    /// AutoMapper 10 style configuration. The static Mapper facade and the
-    /// IMapper created from MapperConfiguration both changed in later majors.
+    /// AutoMapper 15 configuration. The MapperConfiguration constructor now
+    /// requires an ILoggerFactory, so a no-op factory is passed.
     /// </summary>
     public class LegacyMapping
     {
@@ -30,7 +31,7 @@ namespace LegacyMvcApp.Utils
             {
                 cfg.CreateMap<ReportDto, ReportViewModel>()
                    .ForMember(d => d.DisplayName, o => o.MapFrom(s => (s.Name ?? string.Empty).ToUpperInvariant()));
-            });
+            }, NullLoggerFactory.Instance);
 
             _mapper = config.CreateMapper();
         }
