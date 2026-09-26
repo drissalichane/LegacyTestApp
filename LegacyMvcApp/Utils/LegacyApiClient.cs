@@ -1,5 +1,6 @@
 using System;
 using RestSharp;
+using System.Threading.Tasks;
 
 namespace LegacyMvcApp.Utils
 {
@@ -14,22 +15,22 @@ namespace LegacyMvcApp.Utils
 
         public LegacyApiClient()
         {
-            _client = new RestClient("https://example.com");
+            _client = new RestClient(new RestClientOptions("https://example.com"));
         }
 
-        public string FetchReports()
+        public async Task<string> FetchReports()
         {
-            var request = new RestRequest("api/reports", Method.GET);
+            var request = new RestRequest("api/reports", Method.Get);
             request.AddHeader("Accept", "application/json");
 
-            IRestResponse response = _client.Execute(request);
+            var response = await _client.ExecuteAsync(request);
 
             if (!response.IsSuccessful)
             {
                 throw new InvalidOperationException($"Request failed: {response.StatusCode}");
             }
 
-            return response.Content;
+            return response.Content ?? string.Empty;
         }
     }
 }
