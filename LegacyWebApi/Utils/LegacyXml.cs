@@ -10,18 +10,14 @@ namespace LegacyWebApi.Utils
         public void ReadXml()
         {
             // XmlValidatingReader is obsolete
-#pragma warning disable CS0618
-            using (var stringReader = new System.IO.StringReader("<test></test>"))
+            var settings = new XmlReaderSettings { ValidationType = ValidationType.None, DtdProcessing = DtdProcessing.Prohibit };
+            using (var reader = XmlReader.Create(new System.IO.StringReader("<test></test>"), settings))
             {
-                var xmlTextReader = new XmlTextReader(stringReader);
-                var validatingReader = new XmlValidatingReader(xmlTextReader);
-                validatingReader.ValidationType = ValidationType.None;
-                while (validatingReader.Read())
+                while (reader.Read())
                 {
                     // read
                 }
             }
-#pragma warning restore CS0618
         }
     }
 }
